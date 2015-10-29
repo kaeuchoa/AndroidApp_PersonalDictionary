@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kaeuc.finalproject" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".PickLangActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AddWordActivity">
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_ADDWORD"/>
+                <category android:name="personalDictionary.CATEGORY_ADDWORD"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".AddNewLangActivity">
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_ADDLANG"/>
+                <category android:name="personalDictionary.CATEGORY_ADDLANG"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+    </application>
+
+
+</manifest>

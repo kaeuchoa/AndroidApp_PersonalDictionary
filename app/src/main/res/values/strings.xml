@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UPersonal Dictionary</string>
+
+    <string name="initial_message">Pick a Language to Start:</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu">Menu</string>
+    <string name="btn_addWord">Add a new Word</string>
+    <string name="btn_myWords">Go to My Words</string>
+    <string name="btn_pickLanguage">Pick another Language</string>
+    <string name="txt_newWord">New Word</string>
+</resources>
