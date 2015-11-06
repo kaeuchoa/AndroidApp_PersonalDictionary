@@ -46,7 +46,7 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:id="@+id/edt_definitionBox"
         android:editable="true"
         android:layout_below="@+id/txt_definition"
@@ -64,7 +64,7 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:id="@+id/edt_exSentence"
         android:editable="true"
         android:layout_below="@+id/txt_exSentence"
