@@ -31,7 +31,6 @@ public class AddWordActivity extends Activity {
                     addWordIntent.addCategory(AddWordActivity.CATEGORY_ADDWORD);
                     startActivity(addWordIntent);
                 }else{
-                    Toast.makeText(AddWordActivity.this, "Yey", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
