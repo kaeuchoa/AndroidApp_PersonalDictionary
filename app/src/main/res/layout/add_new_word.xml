@@ -46,7 +46,7 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:id="@+id/edt_definitionBox"
         android:editable="true"
         android:layout_below="@+id/txt_definition"
@@ -64,14 +64,14 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:id="@+id/edt_exSentence"
         android:editable="true"
         android:layout_below="@+id/txt_exSentence"
         android:layout_alignStart="@+id/txt_exSentence" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Add Word"
         android:id="@+id/btn_addWord"
@@ -80,7 +80,7 @@
         android:layout_marginTop="24dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Back"
         android:id="@+id/btn_back"

@@ -11,28 +11,30 @@ import android.widget.Button;
 public class PickLangActivity extends Activity {
     private Button englishButton;
     private Button addLangButton;
+    public static final String CATEGORY_PICKLANG = "personalDictionary.CATEGORY_PICKLANG";
+    public static final String ACTION_PICKLANG = "personalDictionary.ACTION_PICKLANG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pick_language);
         this.englishButton = (Button) findViewById(R.id.btn_english);
         this.addLangButton = (Button) findViewById(R.id.btn_addLang);
-        View.OnClickListener actionListener = new View.OnClickListener() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v.getId()== R.id.btn_english) {
-                    Intent intent = new Intent(AddWordActivity.ACTION_ADDWORD);
-                    intent.addCategory(AddWordActivity.CATEGORY_ADDWORD);
-                    startActivity(intent);
+                    Intent menuIntent = new Intent(MenuActivity.ACTION_MENU);
+                    menuIntent.addCategory(MenuActivity.CATEGORY_MENU);
+                    startActivity(menuIntent);
                 }else if(v.getId()== R.id.btn_addLang){
-                    Intent intent = new Intent(AddNewLangActivity.ACTION_ADDLANG);
-                    intent.addCategory(AddNewLangActivity.CATEGORY_ADDLANG);
-                    startActivity(intent);
+                    Intent addNewLangIntent = new Intent(AddNewLangActivity.ACTION_ADDLANG);
+                    addNewLangIntent.addCategory(AddNewLangActivity.CATEGORY_ADDLANG);
+                    startActivity(addNewLangIntent);
                 }
             }
         };
-        englishButton.setOnClickListener(actionListener);
-        addLangButton.setOnClickListener(actionListener);
+        englishButton.setOnClickListener(clickListener);
+        addLangButton.setOnClickListener(clickListener);
     }
 
     @Override
