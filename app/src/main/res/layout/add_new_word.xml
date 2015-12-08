@@ -65,7 +65,7 @@
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:textSize="15dp"
-        android:id="@+id/edt_exSentence"
+        android:id="@+id/edt_exSentenceBox"
         android:editable="true"
         android:layout_below="@+id/txt_exSentence"
         android:layout_alignStart="@+id/txt_exSentence" />
@@ -75,8 +75,8 @@
         android:layout_height="wrap_content"
         android:text="Add Word"
         android:id="@+id/btn_addWord"
-        android:layout_below="@+id/edt_exSentence"
-        android:layout_alignEnd="@+id/edt_exSentence"
+        android:layout_below="@+id/edt_exSentenceBox"
+        android:layout_alignEnd="@+id/edt_exSentenceBox"
         android:layout_marginTop="24dp" />
 
     <Button
