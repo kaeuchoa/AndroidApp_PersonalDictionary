@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
 
@@ -17,6 +18,7 @@ public class AddNewLangActivity extends Activity {
     public static final String CATEGORY_ADDLANG = "personalDictionary.CATEGORY_ADDLANG";
     private Button btnAddLang;
     private EditText edt_Language;
+    String [] langs;
     private LanguagesDataBaseHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class AddNewLangActivity extends Activity {
 
 
     private void addLanguage(){
-        helper.addLanguage(edt_Language.getText().toString(),AddNewLangActivity.this);
+        helper.addLanguage(edt_Language.getText().toString(), AddNewLangActivity.this);
     }
 
     @Override
