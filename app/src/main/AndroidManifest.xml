@@ -16,41 +16,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".AddWordActivity">
+        <activity android:name=".AddWordActivity" >
             <intent-filter>
-                <action android:name="personalDictionary.ACTION_ADDWORD"/>
-                <category android:name="personalDictionary.CATEGORY_ADDWORD"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="personalDictionary.ACTION_ADDWORD" />
 
-        </activity>
-
-        <activity android:name=".AddNewLangActivity">
-            <intent-filter>
-                <action android:name="personalDictionary.ACTION_ADDLANG"/>
-                <category android:name="personalDictionary.CATEGORY_ADDLANG"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-        </activity>
-
-        <activity android:name=".MenuActivity">
-            <intent-filter>
-                <action android:name="personalDictionary.ACTION_MENU"/>
-                <category android:name="personalDictionary.CATEGORY_MENU"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-
+                <category android:name="personalDictionary.CATEGORY_ADDWORD" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-    <activity android:name=".MyWords">
-        <intent-filter>
-            <action android:name="personalDictionary.ACTION_MYWORDS"/>
-            <category android:name="personalDictionary.CATEGORY_MYWORDS"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
-    </activity>
+        <activity android:name=".AddNewLangActivity" >
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_ADDLANG" />
+
+                <category android:name="personalDictionary.CATEGORY_ADDLANG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MenuActivity" >
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_MENU" />
+
+                <category android:name="personalDictionary.CATEGORY_MENU" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MyWords" >
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_MYWORDS" />
+
+                <category android:name="personalDictionary.CATEGORY_MYWORDS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login"
+            android:label="@string/title_activity_login" >
+        </activity>
     </application>
-
 
 </manifest>

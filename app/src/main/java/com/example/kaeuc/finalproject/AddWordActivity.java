@@ -34,6 +34,7 @@ public class AddWordActivity extends Activity {
         edtExSentenceBox= (EditText) findViewById(R.id.edt_exSentenceBox);
         edtWordBox = (EditText) findViewById(R.id.edt_wordBox);
         helper = new WordDataBaseHelper(this);
+
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
