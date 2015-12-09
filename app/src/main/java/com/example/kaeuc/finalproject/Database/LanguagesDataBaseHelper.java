@@ -49,27 +49,24 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void listLanguages(String[] languages,Context context){
-
-
+    public String[] listLanguages(Context context){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT language "+
-                "FROM "+DATA_BASE,null);
+        Cursor cursor = db.rawQuery("SELECT language " +
+                "FROM " + DATA_BASE, null);
+        // 8 elementos agora
+        String [] languages = new String[cursor.getCount()];
+       if(cursor.getCount() == 0){
 
-        if(cursor.getCount() == 0){
-            Toast.makeText(context, "passou aqui 1", Toast.LENGTH_LONG).show();
-            return ;
         }else {
-            Toast.makeText(context, "passou aqui 2", Toast.LENGTH_LONG).show();
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
-                languages = new String[cursor.getCount()];
                 languages[i] = cursor.getString(0);
                 cursor.moveToNext();
-
             }
             cursor.close();
+
         }
+        return languages;
     }
 
 }
