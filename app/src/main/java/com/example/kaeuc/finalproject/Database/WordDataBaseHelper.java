@@ -44,6 +44,8 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
             values.put("definition",columns[1]);
             values.put("sentence", columns[2]);
             values.put("idLanguage",columns[3]);
+
+
             long insert = db.insert(DATA_BASE, null, values);
             if(insert != -1){
                 Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();

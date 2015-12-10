@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
+import com.example.kaeuc.finalproject.Extras.Constants;
 
 public class PickLangActivity extends Activity {
     private Button addLangButton;
@@ -23,6 +22,11 @@ public class PickLangActivity extends Activity {
     private int previousButtonsSize = 0;
     private String [] buttons = new String[0];
     private LanguagesDataBaseHelper helper;
+
+    //adicionar a classe constantes
+    private static final Constants CONSTANTS = new Constants();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +43,10 @@ public class PickLangActivity extends Activity {
         try {
             buttons = helper.listLanguages(this);
             if (buttons.length == 0){
+                //MUDAR PARA MSG DE CONFIRMAÇÃO
                 Toast.makeText(PickLangActivity.this, "You don't have any language yet", Toast.LENGTH_LONG).show();
+
+
                 Intent addNewLangIntent = new Intent(AddNewLangActivity.ACTION_ADDLANG);
                 addNewLangIntent.addCategory(AddNewLangActivity.CATEGORY_ADDLANG);
                 startActivity(addNewLangIntent);
@@ -53,12 +60,19 @@ public class PickLangActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         if(v.getId()== R.id.btn_addLang) {
+                            //se for para adicionar languages
                             Intent addNewLangIntent = new Intent(AddNewLangActivity.ACTION_ADDLANG);
                             addNewLangIntent.addCategory(AddNewLangActivity.CATEGORY_ADDLANG);
                             startActivity(addNewLangIntent);
                         }else{
+                            //se for para o menu de palavras
                             Intent menuIntent = new Intent(MenuActivity.ACTION_MENU);
                             menuIntent.addCategory(MenuActivity.CATEGORY_MENU);
+
+                            //Adicionando o extra que é a LANGID que armazena o nome da lingua
+                            String languageName = ((Button) v).getText().toString();
+                            menuIntent.putExtra(CONSTANTS.LANG_ID, languageName);
+
                             startActivity(menuIntent);
                         }
                     }
@@ -76,28 +90,6 @@ public class PickLangActivity extends Activity {
             e.printStackTrace();
 
         }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-
     }
 
     @Override
