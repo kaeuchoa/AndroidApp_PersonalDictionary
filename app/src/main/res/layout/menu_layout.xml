@@ -4,31 +4,53 @@
 
 
     <TextView
+
+
+        android:text="@string/menu"
+        android:id="@+id/textView2"
+
+        android:layout_marginTop="30px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/menu"
-        android:layout_marginTop="10dp"
-        android:textSize="40dp"
-        android:id="@+id/textView2"
+        android:textSize="35dp"
+        android:textColor="#8A9B0F"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"  />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="400px"
         android:layout_height="wrap_content"
         android:text="@string/btn_addWord"
         android:id="@+id/btn_menuNewWord"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="127dp" />
+
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:background="@drawable/mybutton"
+        android:textStyle="bold"
+        android:layout_margin="10px"
+
+
+        android:layout_below="@+id/btn_menuMyWords"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="400px"
         android:layout_height="wrap_content"
         android:text="@string/btn_myWords"
         android:id="@+id/btn_menuMyWords"
-        android:layout_below="@+id/btn_menuNewWord"
+
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:background="@drawable/mybutton"
+        android:textStyle="bold"
+
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"
+        android:layout_marginTop="113dp"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -37,5 +59,14 @@
         android:text="@string/btn_pickLanguage"
         android:id="@+id/btn_menuPickLang"
         android:layout_alignParentBottom="true"
+
+
+
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:background="@drawable/mybutton"
+        android:textStyle="bold"
+        android:layout_margin="10px"
         />
 </RelativeLayout>
