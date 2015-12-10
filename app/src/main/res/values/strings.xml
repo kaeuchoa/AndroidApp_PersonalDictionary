@@ -8,4 +8,7 @@
     <string name="btn_myWords">Go to My Words</string>
     <string name="btn_pickLanguage">Pick another Language</string>
     <string name="txt_newWord">New Word</string>
+    <string name="title_activity_login">login</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
