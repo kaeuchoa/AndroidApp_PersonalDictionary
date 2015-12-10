@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     private static final String DATA_BASE = "languages";
+    private static final String LANG_COLUMN = "language";
     private static int VERSION = 1;
     public LanguagesDataBaseHelper(Context context) {
         super(context,DATA_BASE,null,VERSION);
@@ -24,7 +25,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DATA_BASE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
-                "language TEXT NOT NULL);");
+                LANG_COLUMN +" TEXT NOT NULL);");
     }
 
     @Override
@@ -38,7 +39,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         }else{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put("language",newLanguage);
+            values.put(LANG_COLUMN,newLanguage);
             long insert = db.insert(DATA_BASE, null, values);
             if(insert != -1){
                 Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
@@ -67,5 +68,24 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         }
         return languages;
     }
+
+    public int getId(Context context,String lang){
+        SQLiteDatabase db = getReadableDatabase();
+        int langID = 0;
+        Cursor cursor = db.rawQuery("SELECT _id " +
+                "FROM " + DATA_BASE + " WHERE " + LANG_COLUMN + " = \"" + lang + "\"", null);
+        if(cursor.getCount() == 0){
+            Toast.makeText(context, "Não recuperou nada", Toast.LENGTH_SHORT).show();
+        }else {
+            cursor.moveToFirst();
+            langID = cursor.getInt(0);
+            cursor.close();
+
+        }
+        return langID;
+    }
+
+
+
 
 }

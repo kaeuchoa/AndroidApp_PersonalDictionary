@@ -18,15 +18,20 @@ import java.util.Map;
 public class WordDataBaseHelper extends SQLiteOpenHelper {
     private static final String DATA_BASE = "words";
     private static int VERSION = 1;
+    private static final String ID_COLUMN = "_id";
+    private static final String FOREIGNKEY_COLUMN = "idLanguage";
+    private static final String WORD_COLUMN = "word";
+    private static final String DEFINITION_COLUMN = "definition";
+    private static final String SENTENCE_COLUMN = "sentence";
     public WordDataBaseHelper(Context context) {
         super(context,DATA_BASE,null,VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + DATA_BASE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
-                "FOREIGN KEY (idLanguage) REFERENCES language (_id)" +
-                "word TEXT NOT NULL, definition TEXT NOT NULL," + "sentence TEXT NOT NULL);");
+        db.execSQL("CREATE TABLE " + DATA_BASE + " ("+ID_COLUMN+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
+                FOREIGNKEY_COLUMN+" INTEGER REFERENCES language (_id)" +
+                ","+WORD_COLUMN+" TEXT NOT NULL,"+DEFINITION_COLUMN +" TEXT NOT NULL," + SENTENCE_COLUMN + " TEXT NOT NULL);");
     }
 
     @Override
@@ -40,10 +45,10 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
         }else{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put("word",columns[0]);
-            values.put("definition",columns[1]);
-            values.put("sentence", columns[2]);
-            values.put("idLanguage",columns[3]);
+            values.put(WORD_COLUMN,columns[0]);
+            values.put(DEFINITION_COLUMN,columns[1]);
+            values.put(SENTENCE_COLUMN, columns[2]);
+            values.put(FOREIGNKEY_COLUMN,Integer.getInteger(columns[3]));
 
 
             long insert = db.insert(DATA_BASE, null, values);
@@ -56,23 +61,23 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void listWords(ArrayList<Map<String,String>> words){
+    public void listWords(ArrayList<Map<String,String>> words, String langName,Context context){
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT word,definition,sentence "+
-                "FROM words",null);
+        LanguagesDataBaseHelper langHelper = new LanguagesDataBaseHelper(context);
+        int langID = langHelper.getId(context, langName);
+        Cursor cursor = db.rawQuery("SELECT "+WORD_COLUMN+","+DEFINITION_COLUMN+","+SENTENCE_COLUMN+
+                " FROM "+ DATA_BASE + " WHERE " +FOREIGNKEY_COLUMN+" = "+ langID,null);
 
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
             Map<String, String> item = new HashMap<>();
-//            int id = cursor.getInt(0);
             String word = cursor.getString(0);
             String definition = cursor.getString(1);
             String sentence = cursor.getString(2);
-//            item.put("id",Integer.toString(id));
-            item.put("word",word);
-            item.put("definition",definition);
-            item.put("sentence",sentence);
+            item.put(WORD_COLUMN,word);
+            item.put(DEFINITION_COLUMN,definition);
+            item.put(SENTENCE_COLUMN,sentence);
 
             words.add(item);
             cursor.moveToNext();

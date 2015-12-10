@@ -55,7 +55,7 @@ public class PickLangActivity extends Activity {
             }else{
                 buttons = helper.listLanguages(this);
                 for (int i = previousButtonsSize; i < buttons.length ; i++) {
-                    createButton(i,buttons[i].toUpperCase());
+                    createButton(i,buttons[i]);
 
                 }
                 View.OnClickListener clickListener = new View.OnClickListener() {

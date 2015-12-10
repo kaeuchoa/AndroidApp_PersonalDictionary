@@ -1,15 +1,14 @@
 package com.example.kaeuc.finalproject;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
 import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
 import com.example.kaeuc.finalproject.Extras.Constants;
 
@@ -26,9 +25,9 @@ public class AddWordActivity extends Activity {
     private Button btnAddWord;
     private EditText edtWordBox, edtDefinitionBox,edtExSentenceBox;
     private WordDataBaseHelper helper;
-    private final Intent previousIntent = getIntent();
+    private Intent previousIntent;
     private static final Constants CONSTANTS = new Constants();
-    private String langID = "";
+    private String langName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,9 @@ public class AddWordActivity extends Activity {
         helper = new WordDataBaseHelper(this);
 
         //RECUPERANDO OS DADOS DA INTENT PASSADA QUE ARMAZENA O NOME DA LINGUA
-        langID = previousIntent.getStringExtra(CONSTANTS.LANG_ID);
+        previousIntent = getIntent();
+        langName = previousIntent.getStringExtra(CONSTANTS.LANG_ID);
+        Toast.makeText(AddWordActivity.this, langName, Toast.LENGTH_SHORT).show();
 
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
@@ -64,9 +65,12 @@ public class AddWordActivity extends Activity {
     }
 
     private void addWord(){
+        LanguagesDataBaseHelper langHelper = new LanguagesDataBaseHelper(this);
+        int langID = langHelper.getId(this,langName);
+
         String[] columns = {edtWordBox.getText().toString(),
                             edtDefinitionBox.getText().toString(),
-                            edtExSentenceBox.getText().toString(),langID};
+                            edtExSentenceBox.getText().toString(),String.valueOf(langID)};
 
         helper.addWord(columns,AddWordActivity.this);
     }

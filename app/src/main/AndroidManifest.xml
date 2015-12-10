@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyWords" >
+        <activity android:name=".MyWordsActivity" >
             <intent-filter>
                 <action android:name="personalDictionary.ACTION_MYWORDS" />
 
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
 
             <intent-filter>

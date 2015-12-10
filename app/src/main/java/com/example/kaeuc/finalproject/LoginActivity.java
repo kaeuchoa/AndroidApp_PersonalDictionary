@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class login extends Activity {
+public class LoginActivity extends Activity {
 
 
     private EditText edtEmail;
@@ -37,7 +37,7 @@ public class login extends Activity {
 //                  edtEmail.getText().toString();
 //                edtPassword.getText().toString();
 
-                Intent pickLangIntent = new Intent(login.this,PickLangActivity.class);
+                Intent pickLangIntent = new Intent(LoginActivity.this,PickLangActivity.class);
                 startActivity(pickLangIntent);
 
 
