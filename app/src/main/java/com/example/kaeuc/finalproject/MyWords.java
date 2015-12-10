@@ -5,11 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
+import com.example.kaeuc.finalproject.Extras.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,10 @@ public class MyWords extends Activity {
     private Button btn_MyWordsBack;
     private WordDataBaseHelper helper;
     private ArrayList<Map<String, String>> words;
+
+    private static final Constants constants = new Constants();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +57,7 @@ public class MyWords extends Activity {
             }
         };
         btn_MyWordsBack.setOnClickListener(clickListener);
-        /*AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemPosition = position;
@@ -60,7 +67,7 @@ public class MyWords extends Activity {
                 Toast.makeText(MyWords.this, itemValue, Toast.LENGTH_SHORT).show();
             }
         };
-        listView.setOnItemClickListener(onItemClickListener);*/
+        listView.setOnItemClickListener(onItemClickListener);
 
     }
 

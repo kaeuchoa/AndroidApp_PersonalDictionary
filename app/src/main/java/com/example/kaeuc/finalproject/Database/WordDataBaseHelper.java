@@ -38,25 +38,19 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
         if(columns.length != 4){
             Toast.makeText(context, "Invalid Size of Columns", Toast.LENGTH_LONG).show();
         }else{
-
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-
             values.put("word",columns[0]);
             values.put("definition",columns[1]);
             values.put("sentence", columns[2]);
             values.put("idLanguage",columns[3]);
 
+
             long insert = db.insert(DATA_BASE, null, values);
-
             if(insert != -1){
-
                 Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
-
             }else{
-
                 Toast.makeText(context, "Falha", Toast.LENGTH_SHORT).show();
-
             }
         }
 
