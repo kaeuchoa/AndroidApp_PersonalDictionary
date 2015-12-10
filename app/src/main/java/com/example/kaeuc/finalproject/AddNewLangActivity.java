@@ -18,7 +18,6 @@ public class AddNewLangActivity extends Activity {
     public static final String CATEGORY_ADDLANG = "personalDictionary.CATEGORY_ADDLANG";
     private Button btnAddLang;
     private EditText edt_Language;
-    String [] langs;
     private LanguagesDataBaseHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

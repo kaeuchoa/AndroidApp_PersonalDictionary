@@ -19,7 +19,8 @@ public class PickLangActivity extends Activity {
     private Button langButton;
     public static final String CATEGORY_PICKLANG = "personalDictionary.CATEGORY_PICKLANG";
     public static final String ACTION_PICKLANG = "personalDictionary.ACTION_PICKLANG";
-    LinearLayout layout;
+    private LinearLayout layout;
+    private int previousButtonsSize = 0;
     private String [] buttons = new String[0];
     private LanguagesDataBaseHelper helper;
     @Override
@@ -30,8 +31,11 @@ public class PickLangActivity extends Activity {
         this.addLangButton = (Button) findViewById(R.id.btn_addLang);
         layout = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         try {
             buttons = helper.listLanguages(this);
             if (buttons.length == 0){
@@ -41,11 +45,9 @@ public class PickLangActivity extends Activity {
                 startActivity(addNewLangIntent);
             }else{
                 buttons = helper.listLanguages(this);
-                for (int i = 0; i < buttons.length ; i++) {
-                    Button newBtn = new Button(this);
-                    newBtn.setId(i + 1);
-                    newBtn.setText(buttons[i].toUpperCase());
-                    layout.addView(newBtn);
+                for (int i = previousButtonsSize; i < buttons.length ; i++) {
+                    createButton(i,buttons[i].toUpperCase());
+
                 }
                 View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
@@ -58,12 +60,11 @@ public class PickLangActivity extends Activity {
                             Intent menuIntent = new Intent(MenuActivity.ACTION_MENU);
                             menuIntent.addCategory(MenuActivity.CATEGORY_MENU);
                             startActivity(menuIntent);
-
                         }
                     }
                 };
                 addLangButton.setOnClickListener(clickListener);
-                for (int i = 0; i < buttons.length; i++) {
+                for (int i = previousButtonsSize; i < buttons.length; i++) {
                     langButton= (Button)layout.getChildAt(i);
                     langButton.setOnClickListener(clickListener);
                 }
@@ -75,9 +76,14 @@ public class PickLangActivity extends Activity {
             e.printStackTrace();
 
         }
-        /*
+    }
 
-*/
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+
+
     }
 
     @Override
@@ -86,6 +92,22 @@ public class PickLangActivity extends Activity {
 
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buttons = helper.listLanguages(this);
+        previousButtonsSize = buttons.length;
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,5 +129,13 @@ public class PickLangActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createButton(int id,String name){
+        Button newBtn = new Button(this);
+        newBtn.setId(id);
+        newBtn.setText(name);
+        layout.addView(newBtn);
+
     }
 }

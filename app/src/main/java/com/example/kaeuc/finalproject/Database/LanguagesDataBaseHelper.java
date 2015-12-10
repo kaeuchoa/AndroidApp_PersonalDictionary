@@ -53,7 +53,6 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT language " +
                 "FROM " + DATA_BASE, null);
-        // 8 elementos agora
         String [] languages = new String[cursor.getCount()];
        if(cursor.getCount() == 0){
 
