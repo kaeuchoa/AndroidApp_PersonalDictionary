@@ -72,9 +72,11 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
             Map<String, String> item = new HashMap<>();
+
             String word = cursor.getString(0);
             String definition = cursor.getString(1);
             String sentence = cursor.getString(2);
+
             item.put(WORD_COLUMN,word);
             item.put(DEFINITION_COLUMN,definition);
             item.put(SENTENCE_COLUMN,sentence);

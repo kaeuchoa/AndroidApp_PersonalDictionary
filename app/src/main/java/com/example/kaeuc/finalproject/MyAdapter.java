@@ -31,12 +31,14 @@ public class MyAdapter extends ArrayAdapter<Map<String,String>> {
         View theView = inflater.inflate(R.layout.my_words_row_layout, parent, false);
 
         // MUDAR OS GETS POR CONSTANTES
+
         String wordText = "Word: "+ getItem(position).get("word");
         String definitionText = "Definition: "+ getItem(position).get("definition");
         String sentenceText = "Sentence: "+ getItem(position).get("sentence");
         String finalText = wordText +"\n"+ definitionText+"\n" + sentenceText;
 
         // Get the TextView we want to edit
+
 
         TextView theTextView = (TextView) theView.findViewById(R.id.txt_RowLayout);
 

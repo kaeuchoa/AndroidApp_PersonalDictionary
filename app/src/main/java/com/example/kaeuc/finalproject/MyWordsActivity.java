@@ -36,16 +36,18 @@ public class MyWordsActivity extends Activity {
         setContentView(R.layout.my_words);
         listView = (ListView) findViewById(R.id.listView);
         btn_MyWordsBack = (Button) findViewById(R.id.btn_MyWordsBack);
-
+        words = new ArrayList<>();
 
         helper = new WordDataBaseHelper(this);
         previousIntent = getIntent();
+
         String langName = previousIntent.getStringExtra(constants.LANG_ID);
         helper.listWords(words,langName,this);
-
+        Toast.makeText(MyWordsActivity.this, ""+ words.size(), Toast.LENGTH_SHORT).show();
 
         ListView myWordsList = (ListView) findViewById(R.id.listView);
         MyAdapter adapter =  new MyAdapter(this,words);
+
         myWordsList.setAdapter(adapter);
 
 
