@@ -1,17 +1,30 @@
 package com.example.kaeuc.finalproject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class login extends Activity {
+
+
+    private EditText edtEmail;
+    private EditText edtPassword;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        edtEmail = (EditText) findViewById(R.id.textArea_email);
+        edtPassword = (EditText) findViewById(R.id.textArea_password);
         setContentView(R.layout.activity_login);
 
         Button btnLogin = (Button) findViewById(R.id.btn_login);
@@ -21,7 +34,11 @@ public class login extends Activity {
             public void onClick(View v) {
 
 
-                //.....
+//                  edtEmail.getText().toString();
+//                edtPassword.getText().toString();
+
+                Intent pickLangIntent = new Intent(login.this,PickLangActivity.class);
+                startActivity(pickLangIntent);
 
 
             }
