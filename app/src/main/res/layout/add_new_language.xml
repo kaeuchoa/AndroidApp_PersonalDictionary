@@ -3,44 +3,59 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_addNewLanguage"
+        android:layout_alignStart="@+id/edt_newLanguage"
         android:text="Language"
         android:id="@+id/txt_language"
-        android:textSize="15dp"
-        android:editable="false"
-        android:layout_above="@+id/btn_addLanguage"
-        android:layout_alignStart="@+id/txt_addNewLanguage"
-        android:layout_marginBottom="60dp"
-        android:layout_gravity="left" />
-
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:textSize="25dp"
-        android:id="@+id/edt_newLanguage"
-        android:layout_above="@+id/btn_addLanguage"
-        android:layout_alignStart="@+id/txt_language"
-        android:layout_alignEnd="@+id/txt_addNewLanguage"
-        android:layout_gravity="center" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+
+        android:textSize="15dp"
+        android:editable="false"
+        android:layout_gravity="left"
+        android:layout_marginTop="129dp"
+ />
+
+    <EditText
+
+        android:id="@+id/edt_newLanguage"
+        android:layout_below="@+id/txt_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+
         android:text="Add Language"
         android:id="@+id/btn_addLanguage"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/edt_newLanguage"
-        android:layout_gravity="center" />
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:background="@drawable/mybutton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="73dp"
+        android:textStyle="bold" />
 
     <TextView
+
+        android:text="Add New Language"
+        android:id="@+id/txt_addNewLanguage"
+
+        android:layout_marginTop="30px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35dp"
-        android:editable="false"
-        android:text="Add New LanguageALO"
-        android:id="@+id/txt_addNewLanguage"
+        android:textColor="#8A9B0F"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

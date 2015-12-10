@@ -10,12 +10,17 @@
 
     <TextView
         android:id="@+id/txt_MyWords"
+        android:text="My Words"
+
+
+        android:layout_marginTop="30px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:textColor="#8A9B0F"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_gravity="center"
-        android:text="My Words"
-        android:textSize="30dp" />
+        android:layout_centerHorizontal="true"  />
 
     <ListView
         android:id="@+id/listView"
@@ -32,7 +37,16 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
-        android:text="Back">
+        android:text="Back"
+
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:background="@drawable/mybutton"
+        android:textStyle="bold"
+        android:layout_margin="10px"
+
+        >
 
     </Button>
 </LinearLayout>
