@@ -26,6 +26,7 @@ public class AddWordActivity extends Activity {
     private WordDataBaseHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_word);
         btnBack= (Button) findViewById(R.id.btn_back);

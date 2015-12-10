@@ -25,12 +25,14 @@ public class PickLangActivity extends Activity {
     private LanguagesDataBaseHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pick_language);
         helper = new LanguagesDataBaseHelper(this);
         this.addLangButton = (Button) findViewById(R.id.btn_addLang);
         layout = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
     }
 
     @Override
