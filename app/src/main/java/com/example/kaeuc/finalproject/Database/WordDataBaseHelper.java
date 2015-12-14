@@ -5,11 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,21 +40,28 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
 
     public void addWord(String[] columns,Context context){
         if(columns.length != 4){
-            Toast.makeText(context, "Invalid Size of Columns", Toast.LENGTH_LONG).show();
+            //TREAT IT
+
         }else{
             SQLiteDatabase db = getWritableDatabase();
+            SQLiteDatabase db2 = getReadableDatabase();
+
+
+
             ContentValues values = new ContentValues();
             values.put(WORD_COLUMN,columns[0]);
             values.put(DEFINITION_COLUMN,columns[1]);
             values.put(SENTENCE_COLUMN, columns[2]);
-            values.put(FOREIGNKEY_COLUMN,Integer.getInteger(columns[3]));
-
+            values.put(FOREIGNKEY_COLUMN, columns[3]);
 
             long insert = db.insert(DATA_BASE, null, values);
+
+
+            //TREAT IT
             if(insert != -1){
-                Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
+
             }else{
-                Toast.makeText(context, "Falha", Toast.LENGTH_SHORT).show();
+
             }
         }
 

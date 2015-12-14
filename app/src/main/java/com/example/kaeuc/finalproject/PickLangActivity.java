@@ -46,7 +46,7 @@ public class PickLangActivity extends Activity {
             buttons = helper.listLanguages(this);
             if (buttons.length == 0){
                 //MUDAR PARA MSG DE CONFIRMAÇÃO
-                Toast.makeText(PickLangActivity.this, "You don't have any language yet", Toast.LENGTH_LONG).show();
+                Toast.makeText(PickLangActivity.this, "You don't have any language yet.", Toast.LENGTH_LONG).show();
 
 
                 Intent addNewLangIntent = new Intent(AddNewLangActivity.ACTION_ADDLANG);

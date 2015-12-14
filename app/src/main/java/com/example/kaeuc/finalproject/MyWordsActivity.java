@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
 import com.example.kaeuc.finalproject.Extras.Constants;
@@ -28,6 +27,7 @@ public class MyWordsActivity extends Activity {
     private ArrayList<Map<String, String>> words;
     private Intent previousIntent;
     private static final Constants constants = new Constants();
+    private TextView txt_Title;
 
 
     @Override
@@ -37,14 +37,14 @@ public class MyWordsActivity extends Activity {
         listView = (ListView) findViewById(R.id.listView);
         btn_MyWordsBack = (Button) findViewById(R.id.btn_MyWordsBack);
         words = new ArrayList<>();
-
+        txt_Title = (TextView) findViewById(R.id.txt_MyWordsTitle);
         helper = new WordDataBaseHelper(this);
         previousIntent = getIntent();
 
-        String langName = previousIntent.getStringExtra(constants.LANG_ID);
-        helper.listWords(words,langName,this);
-        Toast.makeText(MyWordsActivity.this, ""+ words.size(), Toast.LENGTH_SHORT).show();
+        txt_Title.setText(previousIntent.getStringExtra(constants.LANG_ID)+" - "+ txt_Title.getText().toString());
 
+        String langName = previousIntent.getStringExtra(constants.LANG_ID);
+        helper.listWords(words, langName, this);
         ListView myWordsList = (ListView) findViewById(R.id.listView);
         MyAdapter adapter =  new MyAdapter(this,words);
 

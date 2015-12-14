@@ -11,11 +11,10 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 
-
     private EditText edtEmail;
     private EditText edtPassword;
-
-
+    public static final String CATEGORY_ADDWORD = "personalDictionary.CATEGORY_LOGIN";
+    public static final String ACTION_ADDWORD = "personalDictionary.ACTION_LOGIN";
 
 
     @Override

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
 import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
@@ -46,7 +46,7 @@ public class AddWordActivity extends Activity {
         //RECUPERANDO OS DADOS DA INTENT PASSADA QUE ARMAZENA O NOME DA LINGUA
         previousIntent = getIntent();
         langName = previousIntent.getStringExtra(CONSTANTS.LANG_ID);
-        Toast.makeText(AddWordActivity.this, langName, Toast.LENGTH_SHORT).show();
+
 
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class AddWordActivity extends Activity {
                 v = (Button)v;
                 if (v.getId() == R.id.btn_addWord){
                     addWord();
-
+                    finish();
                 }else{
                     finish();
                 }

@@ -75,7 +75,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT _id " +
                 "FROM " + DATA_BASE + " WHERE " + LANG_COLUMN + " = \"" + lang + "\"", null);
         if(cursor.getCount() == 0){
-            Toast.makeText(context, "Não recuperou nada", Toast.LENGTH_SHORT).show();
+            //TREAT ERRORS
         }else {
             cursor.moveToFirst();
             langID = cursor.getInt(0);
