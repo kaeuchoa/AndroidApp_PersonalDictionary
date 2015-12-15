@@ -22,15 +22,16 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
     private static final String WORD_COLUMN = "word";
     private static final String DEFINITION_COLUMN = "definition";
     private static final String SENTENCE_COLUMN = "sentence";
+
     public WordDataBaseHelper(Context context) {
         super(context,DATA_BASE,null,VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + DATA_BASE + " ("+ID_COLUMN+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
-                FOREIGNKEY_COLUMN+" INTEGER REFERENCES language (_id)" +
-                ","+WORD_COLUMN+" TEXT NOT NULL,"+DEFINITION_COLUMN +" TEXT NOT NULL," + SENTENCE_COLUMN + " TEXT NOT NULL);");
+        db.execSQL("CREATE TABLE " + DATA_BASE + " (" + ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
+                FOREIGNKEY_COLUMN + " INTEGER REFERENCES language (_id)" +
+                "," + WORD_COLUMN + " TEXT NOT NULL," + DEFINITION_COLUMN + " TEXT NOT NULL," + SENTENCE_COLUMN + " TEXT NOT NULL);");
     }
 
     @Override
@@ -68,13 +69,16 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void listWords(ArrayList<Map<String,String>> words, String langName,Context context){
-
-        SQLiteDatabase db = getReadableDatabase();
         LanguagesDataBaseHelper langHelper = new LanguagesDataBaseHelper(context);
-        int langID = langHelper.getId(context, langName);
-        Cursor cursor = db.rawQuery("SELECT "+WORD_COLUMN+","+DEFINITION_COLUMN+","+SENTENCE_COLUMN+
-                " FROM "+ DATA_BASE + " WHERE " +FOREIGNKEY_COLUMN+" = "+ langID,null);
+        SQLiteDatabase db = getReadableDatabase();
 
+
+        int langID = langHelper.getId(context, langName);
+        final String [] columns = {WORD_COLUMN,DEFINITION_COLUMN,SENTENCE_COLUMN};
+        final String whereClause = FOREIGNKEY_COLUMN+"= ?";
+        String[] whereArgs = {String.valueOf(langID)} ;
+        //query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy)
+        Cursor cursor = db.query(DATA_BASE,columns,whereClause,whereArgs,null,null,WORD_COLUMN);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
             Map<String, String> item = new HashMap<>();
@@ -93,7 +97,17 @@ public class WordDataBaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
     }
+    public void deleteWord(String word){
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(DATA_BASE, WORD_COLUMN + "=?", new String[]{word});
 
+    }
+
+    public void deleteByID(String id){
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(DATA_BASE,FOREIGNKEY_COLUMN+"=?",new String[]{id});
+
+    }
 
 
 }

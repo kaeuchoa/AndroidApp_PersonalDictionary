@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.kaeuc.finalproject.PickLangActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     private static final String LANG_COLUMN = "language";
     private static int VERSION = 1;
     public LanguagesDataBaseHelper(Context context) {
-        super(context,DATA_BASE,null,VERSION);
+        super(context, DATA_BASE, null, VERSION);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         }else{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(LANG_COLUMN,newLanguage);
+            values.put(LANG_COLUMN, newLanguage);
             long insert = db.insert(DATA_BASE, null, values);
             if(insert != -1){
                 Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
@@ -52,8 +54,8 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
 
     public String[] listLanguages(Context context){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT language " +
-                "FROM " + DATA_BASE, null);
+        Cursor cursor = db.rawQuery("SELECT " +LANG_COLUMN+
+                " FROM " + DATA_BASE + " ORDER BY "+ LANG_COLUMN, null);
         String [] languages = new String[cursor.getCount()];
        if(cursor.getCount() == 0){
 
@@ -72,8 +74,10 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     public int getId(Context context,String lang){
         SQLiteDatabase db = getReadableDatabase();
         int langID = 0;
-        Cursor cursor = db.rawQuery("SELECT _id " +
-                "FROM " + DATA_BASE + " WHERE " + LANG_COLUMN + " = \"" + lang + "\"", null);
+        String whereClause = LANG_COLUMN + "=?";
+        String [] whereArgs = {lang};
+        Cursor cursor = db.query(DATA_BASE,null,whereClause,whereArgs,null,null,null);
+
         if(cursor.getCount() == 0){
             //TREAT ERRORS
         }else {
@@ -85,7 +89,12 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         return langID;
     }
 
-
+    public void deleteLanguage(String langName, Context context){
+        SQLiteDatabase db = getReadableDatabase();
+        WordDataBaseHelper helper = new WordDataBaseHelper(context);
+        helper.deleteByID(""+getId(context,langName));
+        db.delete(DATA_BASE, LANG_COLUMN + "=?", new String[]{langName});
+    }
 
 
 }

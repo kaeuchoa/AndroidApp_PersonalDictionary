@@ -1,23 +1,31 @@
 package com.example.kaeuc.finalproject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
 import com.example.kaeuc.finalproject.Extras.Constants;
+import com.example.kaeuc.finalproject.Extras.LangDialog;
 
 public class PickLangActivity extends Activity {
     private Button addLangButton;
     private Button langButton;
     public static final String CATEGORY_PICKLANG = "personalDictionary.CATEGORY_PICKLANG";
     public static final String ACTION_PICKLANG = "personalDictionary.ACTION_PICKLANG";
+
     private LinearLayout layout;
     private int previousButtonsSize = 0;
     private String [] buttons = new String[0];
@@ -37,11 +45,14 @@ public class PickLangActivity extends Activity {
         layout = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+
         try {
             buttons = helper.listLanguages(this);
             if (buttons.length == 0){
@@ -79,11 +90,36 @@ public class PickLangActivity extends Activity {
                         }
                     }
                 };
+
+
                 addLangButton.setOnClickListener(clickListener);
-                for (int i = previousButtonsSize; i < buttons.length; i++) {
+                    for (int i = previousButtonsSize; i < buttons.length; i++) {
                     langButton= (Button)layout.getChildAt(i);
                     langButton.setOnClickListener(clickListener);
                 }
+
+                View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        //Setting the Dialog Windows
+                        LangDialog dialog = new LangDialog();
+                        dialog.show(getFragmentManager(),"");
+                        dialog.setParentContext(PickLangActivity.this);
+
+
+                        String langName = ((Button)v).getText().toString();
+                        Bundle wordBundle = new Bundle();
+                        wordBundle.putString("language", langName);
+                        dialog.setInternalBundle(wordBundle);
+
+                        return true;
+                    }
+                };
+                for (int i = previousButtonsSize; i < buttons.length; i++) {
+                    langButton= (Button)layout.getChildAt(i);
+                    langButton.setOnLongClickListener(onLongClickListener);
+                }
+
             }
 
 
@@ -130,6 +166,8 @@ public class PickLangActivity extends Activity {
         newBtn.setId(id);
         newBtn.setText(name);
         layout.addView(newBtn);
-
     }
+
+
+
 }
