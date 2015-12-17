@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * CUSTOM ADAPTER TO PASS IN THE LIST VIEW
  * Created by kaeuc on 11/30/2015.
  */
 public class MyAdapter extends ArrayAdapter<Map<String,String>> {

@@ -10,14 +10,20 @@ import android.os.Bundle;
 import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
 
 /**
+ * PERSONALIZED DIALOG WINDOW TO USE WITHIN PICKLANGACTIVITY
  * Created by kaeuc on 12/13/2015.
  */
 public class LangDialog extends DialogFragment {
+    /*DATA NEEDED FOR INTERNAL USE*/
     private Context parentContext;
     private Bundle internalBundle;
+
+    /*DIALOG WINDOW OPTIONS*/
     private static final String [] DIALOG_ACTIONS = {"Delete Language", "Edit Language"};
+
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
+        /*FACTORY CLASS FOR DIALOGS*/
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Options")
                 .setItems(DIALOG_ACTIONS, new DialogInterface.OnClickListener() {
@@ -32,7 +38,7 @@ public class LangDialog extends DialogFragment {
                                     })
                                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            // DROP DATABASE
+                                            // PERFORMS DELETE ACTIONS
                                             LanguagesDataBaseHelper helper = new LanguagesDataBaseHelper(parentContext);
                                             helper.deleteLanguage(internalBundle.getString("language"),parentContext);
                                         }

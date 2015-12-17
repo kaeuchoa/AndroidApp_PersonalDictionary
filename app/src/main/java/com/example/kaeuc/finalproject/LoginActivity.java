@@ -8,42 +8,64 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.kaeuc.finalproject.Database.LoginDataBaseHelper;
 
 public class LoginActivity extends Activity {
 
-    private EditText edtEmail;
-    private EditText edtPassword;
+
     public static final String CATEGORY_ADDWORD = "personalDictionary.CATEGORY_LOGIN";
     public static final String ACTION_ADDWORD = "personalDictionary.ACTION_LOGIN";
 
+    private EditText edtUsername;
+    private EditText edtPassword;
+    private Button btnLogin;
+    private Button btnCreateProfile;
+    private LoginDataBaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        edtEmail = (EditText) findViewById(R.id.textArea_email);
-        edtPassword = (EditText) findViewById(R.id.textArea_password);
         setContentView(R.layout.activity_login);
 
-        Button btnLogin = (Button) findViewById(R.id.btn_login);
-
-        View.OnClickListener clickListenerlogin = new View.OnClickListener() {
+        helper = new LoginDataBaseHelper(this);
+        edtUsername = (EditText) findViewById(R.id.edt_Username);
+        edtPassword = (EditText) findViewById(R.id.edt_Password);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+        btnCreateProfile = (Button) findViewById(R.id.btn_createProfile);
+        final View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-//                  edtEmail.getText().toString();
-//                edtPassword.getText().toString();
-
-                Intent pickLangIntent = new Intent(LoginActivity.this,PickLangActivity.class);
-                startActivity(pickLangIntent);
-
-
+                if(v.getId() == btnLogin.getId()){
+                    String username = edtUsername.getText().toString();
+                    String password = edtPassword.getText().toString();
+                    final int checkLogin = helper.checkLogin(username, password);
+                    if (checkLogin == 1){
+                        Intent intent = new Intent(PickLangActivity.ACTION_PICKLANG);
+                        intent.addCategory(PickLangActivity.CATEGORY_PICKLANG);
+                        intent.putExtra("username", username);
+                        edtPassword.setText("");
+                        edtUsername.setText("");
+                        startActivity(intent);
+                    }else if(checkLogin == -1){
+                        Toast.makeText(LoginActivity.this, "Invalid Username or Password", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "No profiles were found. Create one before continue.", Toast.LENGTH_LONG).show();
+                    }
+                    
+                }else if(v.getId() == btnCreateProfile.getId()){
+                    Intent intent = new Intent(CreateProfileActivity.ACTION_CREATEPROFILE);
+                    intent.addCategory(CreateProfileActivity.CATEGORY_CREATEPROFILE);
+                    edtPassword.setText("");
+                    edtUsername.setText("");
+                    startActivity(intent);
+                }
             }
         };
-
-        btnLogin.setOnClickListener(clickListenerlogin);
+        btnCreateProfile.setOnClickListener(clickListener);
+        btnLogin.setOnClickListener(clickListener);
 
 
     }

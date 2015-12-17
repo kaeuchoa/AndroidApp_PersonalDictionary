@@ -7,11 +7,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
-        <activity
-
-            android:name=".PickLangActivity"
+        <activity android:name=".PickLangActivity"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_PICKLANG" />
 
+                <category android:name="personalDictionary.CATEGORY_PICKLANG" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
         </activity>
         <activity android:name=".AddWordActivity" >
             <intent-filter>
@@ -45,16 +49,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
+        <activity android:name=".LoginActivity"
             >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="personalDictionary.ACTION_LOGIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="personalDictionary.CATEGORY_MYWORDS" />
+                <category android:name="personalDictionary.CATEGORY_LOGIN" />
 
+            </intent-filter>
+
+        </activity>
+        
+        <activity android:name=".CreateProfileActivity">
+
+            <intent-filter>
+                <action android:name="personalDictionary.ACTION_CREATEPROFILE"/>
+                <category android:name="personalDictionary.CATEGORY_CREATEPROFILE"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>

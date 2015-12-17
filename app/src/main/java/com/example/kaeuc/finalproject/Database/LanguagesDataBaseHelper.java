@@ -7,42 +7,59 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.PickLangActivity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
+ * CLASS TO DEAL WITH THE LANGUAGE DATABASE OPERATIONS
  * Created by kaeuc on 11/29/2015.
  */
 public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
-    private static final String DATA_BASE = "languages";
+
+    /*CONSTANTS WITH COLUMNS NAMES AND DB NAME*/
+    private static final String DB_NAME = "languages";
     private static final String LANG_COLUMN = "language";
+    private static final String FOREIGNKEY_COLUMN = "idusername";
     private static int VERSION = 1;
+
+
+
+    /*CONSTRUCTOR*/
     public LanguagesDataBaseHelper(Context context) {
-        super(context, DATA_BASE, null, VERSION);
+        super(context, DB_NAME, null, VERSION);
     }
 
+    /*INITIALIZE THE DATABASE*/
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + DATA_BASE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
+        db.execSQL("CREATE TABLE " + DB_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , "+
+                FOREIGNKEY_COLUMN + " INTEGER REFERENCES login (_id) ," +
                 LANG_COLUMN +" TEXT NOT NULL);");
+
     }
 
+    /*UPDATES THE DATABASE*/
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 
-    public void addLanguage(String newLanguage,Context context){
+    /*PUBLIC METHOD FOR ADDING A LANGUAGE*/
+
+    public void addLanguage(String newLanguage,String username,Context context){
         if(newLanguage.isEmpty()){
             Toast.makeText(context, "Blank Field, try again.", Toast.LENGTH_LONG).show();
         }else{
+            //RETRIEVING THE DATABASE TO INSERT THE INFO
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
+            LoginDataBaseHelper helper = new LoginDataBaseHelper(context);
+            //Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
+
+            final int id = helper.getId(username,context);
+            String userID = String.valueOf(id);
             values.put(LANG_COLUMN, newLanguage);
-            long insert = db.insert(DATA_BASE, null, values);
+            values.put(FOREIGNKEY_COLUMN, userID);
+            long insert = db.insert(DB_NAME, null, values);
+
+            /*DEALS WITH THE RESULT OF INSERT*/
             if(insert != -1){
                 Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
             }else{
@@ -52,14 +69,22 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public String[] listLanguages(Context context){
+    /*PUBLIC METHOD FOR RETRIEVING THE LANGUAGES FROM THE DATABASE*/
+    public String[] listLanguages(Context context,String username){
+        //GETS THE DATABASE TO READ FROM
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " +LANG_COLUMN+
-                " FROM " + DATA_BASE + " ORDER BY "+ LANG_COLUMN, null);
-        String [] languages = new String[cursor.getCount()];
-       if(cursor.getCount() == 0){
+        LoginDataBaseHelper helper = new LoginDataBaseHelper(context);
+        final int id = helper.getId(username, context);
+        final String stringID = String.valueOf(id);
+        //CREATES THE SELECT QUERY
+        Cursor cursor = db.query(DB_NAME,new String[]{LANG_COLUMN},FOREIGNKEY_COLUMN+"=?",
+                                                   new String[]{stringID},null,null, LANG_COLUMN);
 
-        }else {
+        //CREATES THE ARRAY TO RETURN THAT WILL TURN INTO BUTTONS
+        String [] languages = new String[cursor.getCount()];
+
+        //IF RETURNS SOMETHING INSERT THE VALUES IN THE ARRAY
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
                 languages[i] = cursor.getString(0);
@@ -71,16 +96,15 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         return languages;
     }
 
+    /*PUBLIC METHOD USED TO IDENTIFY THE FOREIGN KEY BASED ON THE LANGUAGE NAME*/
     public int getId(Context context,String lang){
         SQLiteDatabase db = getReadableDatabase();
         int langID = 0;
         String whereClause = LANG_COLUMN + "=?";
         String [] whereArgs = {lang};
-        Cursor cursor = db.query(DATA_BASE,null,whereClause,whereArgs,null,null,null);
+        Cursor cursor = db.query(DB_NAME,null,whereClause,whereArgs,null,null,null);
 
-        if(cursor.getCount() == 0){
-            //TREAT ERRORS
-        }else {
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             langID = cursor.getInt(0);
             cursor.close();
@@ -89,11 +113,13 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
         return langID;
     }
 
+
+    /*PUBLIC METHOD TO DELETE LANGUAGES AND ALL ITS REGISTERS IN THE WORD TABLE */
     public void deleteLanguage(String langName, Context context){
         SQLiteDatabase db = getReadableDatabase();
         WordDataBaseHelper helper = new WordDataBaseHelper(context);
         helper.deleteByID(""+getId(context,langName));
-        db.delete(DATA_BASE, LANG_COLUMN + "=?", new String[]{langName});
+        db.delete(DB_NAME, LANG_COLUMN + "=?", new String[]{langName});
     }
 
 

@@ -17,37 +17,42 @@ import com.example.kaeuc.finalproject.Extras.Constants;
  */
 public class AddWordActivity extends Activity {
 
+    /*ACTIVITIES IDENTIFIERS FOR THE MANIFEST*/
     public static final String CATEGORY_ADDWORD = "personalDictionary.CATEGORY_ADDWORD";
     public static final String ACTION_ADDWORD = "personalDictionary.ACTION_ADDWORD";
-    public static int _wordLanguage;
 
+    /*LAYOUT ELEMENTS*/
     private Button btnBack;
     private Button btnAddWord;
     private EditText edtWordBox, edtDefinitionBox,edtExSentenceBox;
-    private WordDataBaseHelper helper;
+
+    /*CONTENT AUXILIARIES*/
+    private WordDataBaseHelper wordDataBaseHelper;
     private Intent previousIntent;
-    private static final Constants CONSTANTS = new Constants();
     private String langName = "";
 
+    private static final Constants CONSTANTS = new Constants();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_word);
 
-        //INICIALIZANDO AS VIEWS E O BD HELPER
+        //INITIALIZE LAYOUT ELEMENTS
         btnBack= (Button) findViewById(R.id.btn_back);
         btnAddWord = (Button) findViewById(R.id.btn_addWord);
         edtDefinitionBox = (EditText) findViewById(R.id.edt_definitionBox);
         edtExSentenceBox= (EditText) findViewById(R.id.edt_exSentenceBox);
         edtWordBox = (EditText) findViewById(R.id.edt_wordBox);
-        helper = new WordDataBaseHelper(this);
 
-        //RECUPERANDO OS DADOS DA INTENT PASSADA QUE ARMAZENA O NOME DA LINGUA
+        //INITIALIZE THE DATABASE HELPER
+        wordDataBaseHelper = new WordDataBaseHelper(this);
+
+        //RETRIEVING THE CONTENT FROM THE LAST ACTIVITY THAT HOLDS THE LANGUAGE NAME
         previousIntent = getIntent();
         langName = previousIntent.getStringExtra(CONSTANTS.LANG_ID);
 
-
+        //CREATES ONCLICKLISTENER TO THE BUTTONS
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,20 +69,23 @@ public class AddWordActivity extends Activity {
         btnAddWord.setOnClickListener(clickListener);
     }
 
+    /*PRIVATE METHOD THAT USE THE DATABASEHELPERS OPERATIONS*/
     private void addWord(){
-        LanguagesDataBaseHelper langHelper = new LanguagesDataBaseHelper(this);
-        int langID = langHelper.getId(this,langName);
+        //USES THE LANGUAGE HELPER TO FIND THE LANG_ID THAT WILL BE USED AS FOREIGN KEY IN THE DATABASE
+        LanguagesDataBaseHelper languagesDataBaseHelper = new LanguagesDataBaseHelper(this);
+        int langID = languagesDataBaseHelper.getId(this,langName);
 
+        //ARRAY CONTAINING THE INFORMATION THAT WILL BE PASSED TO THE DATABSE
         String[] columns = {edtWordBox.getText().toString(),
                             edtDefinitionBox.getText().toString(),
                             edtExSentenceBox.getText().toString(),String.valueOf(langID)};
 
-        helper.addWord(columns,AddWordActivity.this);
+        wordDataBaseHelper.addWord(columns, AddWordActivity.this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        helper.close();
+        wordDataBaseHelper.close();
     }
 }
