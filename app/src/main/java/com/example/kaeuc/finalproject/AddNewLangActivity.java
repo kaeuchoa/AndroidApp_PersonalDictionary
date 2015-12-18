@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 
@@ -51,7 +50,7 @@ public class AddNewLangActivity extends Activity {
 
     private void addLanguage(){
 
-        Toast.makeText(AddNewLangActivity.this, username, Toast.LENGTH_SHORT).show();
+
         helper.addLanguage(edt_Language.getText().toString(),
                                             username,AddNewLangActivity.this);
     }

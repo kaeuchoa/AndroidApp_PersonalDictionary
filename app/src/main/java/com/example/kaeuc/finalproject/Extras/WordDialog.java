@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 import com.example.kaeuc.finalproject.Database.WordDAO;

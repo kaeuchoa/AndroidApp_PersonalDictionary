@@ -61,9 +61,9 @@ public class LanguagesDAO extends SQLiteOpenHelper {
 
             /*DEALS WITH THE RESULT OF INSERT*/
             if(insert != -1){
-                Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sucess", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(context, "Falha", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Fail. Try again", Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kaeuc.finalproject.Database.WordDAO;
 import com.example.kaeuc.finalproject.Extras.AuxiliarList;
@@ -120,7 +119,7 @@ public class MyWordsActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(MyWordsActivity.this, "MyWords OnPause", Toast.LENGTH_LONG).show();
+
     }
 
     /*PRIVATE METHOD TO GET THE WORD THAT WILL BE PASSED AS PARAMETER TO THE DIALOG OPERATIONS*/
