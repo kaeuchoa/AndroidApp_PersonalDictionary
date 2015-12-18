@@ -11,7 +11,7 @@ import android.widget.Toast;
  * CLASS TO DEAL WITH THE LANGUAGE DATABASE OPERATIONS
  * Created by kaeuc on 11/29/2015.
  */
-public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
+public class LanguagesDAO extends SQLiteOpenHelper {
 
     /*CONSTANTS WITH COLUMNS NAMES AND DB NAME*/
     private static final String DB_NAME = "languages";
@@ -22,7 +22,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
 
 
     /*CONSTRUCTOR*/
-    public LanguagesDataBaseHelper(Context context) {
+    public LanguagesDAO(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
 
@@ -50,7 +50,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
             //RETRIEVING THE DATABASE TO INSERT THE INFO
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            LoginDataBaseHelper helper = new LoginDataBaseHelper(context);
+            LoginDAO helper = new LoginDAO(context);
             //Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
 
             final int id = helper.getId(username,context);
@@ -73,7 +73,7 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     public String[] listLanguages(Context context,String username){
         //GETS THE DATABASE TO READ FROM
         SQLiteDatabase db = getReadableDatabase();
-        LoginDataBaseHelper helper = new LoginDataBaseHelper(context);
+        LoginDAO helper = new LoginDAO(context);
         final int id = helper.getId(username, context);
         final String stringID = String.valueOf(id);
         //CREATES THE SELECT QUERY
@@ -117,9 +117,17 @@ public class LanguagesDataBaseHelper extends SQLiteOpenHelper {
     /*PUBLIC METHOD TO DELETE LANGUAGES AND ALL ITS REGISTERS IN THE WORD TABLE */
     public void deleteLanguage(String langName, Context context){
         SQLiteDatabase db = getReadableDatabase();
-        WordDataBaseHelper helper = new WordDataBaseHelper(context);
+        WordDAO helper = new WordDAO(context);
         helper.deleteByID(""+getId(context,langName));
         db.delete(DB_NAME, LANG_COLUMN + "=?", new String[]{langName});
+    }
+
+    public void updateLanguage(String langName,String newName,Context context){
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(LANG_COLUMN,newName);
+        db.update(DB_NAME,values, LANG_COLUMN + "=?",
+                                            new String[]{langName});
     }
 
 

@@ -6,10 +6,36 @@
     <TextView
 
         android:text="sample text:"
-        android:id="@+id/txt_RowLayout"
-        android:layout_marginTop="30px"
+        android:id="@+id/txt_WordLine"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        />
+
+    <TextView
+
+        android:text="sample text:"
+        android:id="@+id/txt_DefinitionLine"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        />
+    <TextView
+
+        android:text="sample text:"
+        android:id="@+id/txt_SentenceLine"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textColor="#000000"
         android:textStyle="bold"

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.AddNewLangActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import java.util.Map;
  * CLASS TO DEAL WITH THE LANGUAGE DATABASE OPERATIONS
  * Created by kaeuc on 11/29/2015.
  */
-public class LoginDataBaseHelper extends SQLiteOpenHelper {
+public class LoginDAO extends SQLiteOpenHelper {
 
     /*CONSTANTS WITH COLUMNS NAMES AND DB NAME*/
     private static final String DB_NAME = "login";
@@ -26,7 +25,7 @@ public class LoginDataBaseHelper extends SQLiteOpenHelper {
     private static int VERSION = 1;
 
     /*CONSTRUCTOR*/
-    public LoginDataBaseHelper(Context context) {
+    public LoginDAO(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
 
@@ -53,6 +52,7 @@ public class LoginDataBaseHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(USERNAME, username);
+            //add the hash
             values.put(PASSWORD,password);
             long insert = db.insert(DB_NAME, null, values);
 
@@ -136,7 +136,7 @@ public class LoginDataBaseHelper extends SQLiteOpenHelper {
     /*PUBLIC METHOD TO DELETE LANGUAGES AND ALL ITS REGISTERS IN THE WORD TABLE */
     /*public void deleteLanguage(String langName, Context context){
         SQLiteDatabase db = getReadableDatabase();
-        WordDataBaseHelper helper = new WordDataBaseHelper(context);
+        WordDAO helper = new WordDAO(context);
         helper.deleteByID(""+getId(context,langName));
         db.delete(DB_NAME, USERNAME + "=?", new String[]{langName});
     }*/

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.kaeuc.finalproject.Database.LoginDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LoginDAO;
 
 /**
  * Created by kaeuc on 12/16/2015.
@@ -21,13 +21,13 @@ public class CreateProfileActivity extends Activity {
     private EditText edtCreatePassword;
     private Button btnCreate;
 
-    private LoginDataBaseHelper helper;
+    private LoginDAO helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
-        helper = new LoginDataBaseHelper(this);
+        helper = new LoginDAO(this);
 
         edtCreateUsername = (EditText) findViewById(R.id.edt_createUsername);
         edtCreatePassword = (EditText) findViewById(R.id.edt_createPassword);

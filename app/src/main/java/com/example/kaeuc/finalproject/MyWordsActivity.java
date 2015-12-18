@@ -10,14 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.WordDAO;
+import com.example.kaeuc.finalproject.Extras.AuxiliarList;
 import com.example.kaeuc.finalproject.Extras.Constants;
 import com.example.kaeuc.finalproject.Extras.WordDialog;
+import com.example.kaeuc.finalproject.Extras.WordsAdapter;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * CLASS THAT DEALS WITH PRESENTING THE WORDS
@@ -32,11 +32,20 @@ public class MyWordsActivity extends Activity {
     /*LAYOUT ELEMENTS*/
     private Button btn_MyWordsBack;
     private TextView txt_Title;
+    private ListView myWordsList;
 
     /*CONTENT AUXILIARIES*/
-    private WordDataBaseHelper helper;
+    private WordDAO helper;
     private ArrayList<Map<String, String>> words;
     private Intent previousIntent;
+    private MyAdapter adapter;
+
+
+    String langName;
+
+    private WordsAdapter wordsAdapter;
+    private ArrayList<WordClass> words2;
+
 
     private static final Constants constants = new Constants();
     @Override
@@ -44,30 +53,38 @@ public class MyWordsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_words);
 
+
+
+
+
         /*INITIALIZE LAYOUT ELEMENTS*/
         btn_MyWordsBack = (Button) findViewById(R.id.btn_MyWordsBack);
-        words = new ArrayList<>();
+        //words = new ArrayList<>();
         txt_Title = (TextView) findViewById(R.id.txt_MyWordsTitle);
 
         /*GETS DATA FROM THE PREVIOUS ACTIVITY*/
         previousIntent = getIntent();
         txt_Title.setText(previousIntent.getStringExtra(constants.LANG_ID) + " - " + txt_Title.getText().toString());
 
-        String langName = previousIntent.getStringExtra(constants.LANG_ID);
+        langName = previousIntent.getStringExtra(constants.LANG_ID);
         /*FULFILL THE ARRAYLIST WITH MAPS CONTAINING THE DATA FROM THE DATABASE*/
-        helper = new WordDataBaseHelper(this);
-        helper.listWords(words, langName, this);
+        helper = new WordDAO(this);
+        //helper.listWords(words, langName, this);
 
         /*SETS THE LISTVIEW TO SHOW THEM*/
-        ListView myWordsList = (ListView) findViewById(R.id.listView);
-        final MyAdapter adapter =  new MyAdapter(this,words);
-        myWordsList.setAdapter(adapter);
+        words2 = new ArrayList<>();
+        wordsAdapter = new WordsAdapter(this,words2);
+        myWordsList = (ListView) findViewById(R.id.listView);
+       // adapter =  new MyAdapter(this,words);
+        myWordsList.setAdapter(wordsAdapter);
+        helper.listWords(langName, this, wordsAdapter);
+
 
         /*ATTACHES AN ONCLICKLISTENER TO THE BACK BUTTON*/
         btn_MyWordsBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -76,13 +93,22 @@ public class MyWordsActivity extends Activity {
            @Override
            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                //CREATES A DIALOG TO SHOW OPTIONS
+
                WordDialog dialog = new WordDialog();
                dialog.setParentContext(MyWordsActivity.this);
                dialog.show(getFragmentManager(), "");
 
                //PASSES INFORMATION THAT WILL BE USED ON THE DIALOG
                Bundle wordBundle = new Bundle();
-               wordBundle.putString("word", extractWord(parent,position));
+               final String[] elements = extractElements(parent, position);
+               wordBundle.putString("word",elements[0] );
+               wordBundle.putString("definition",elements[1] );
+               wordBundle.putString("sentence",elements[2] );
+
+               wordBundle.putString("lang", langName);
+               AuxiliarList W = new AuxiliarList();
+               W.wordList = myWordsList;
+               wordBundle.putSerializable("list", W);
                dialog.setInternalBundle(wordBundle);
                return true;
            }
@@ -91,15 +117,18 @@ public class MyWordsActivity extends Activity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(MyWordsActivity.this, "MyWords OnPause", Toast.LENGTH_LONG).show();
+    }
+
     /*PRIVATE METHOD TO GET THE WORD THAT WILL BE PASSED AS PARAMETER TO THE DIALOG OPERATIONS*/
-    private String extractWord(AdapterView<?> parent,int position){
+    private String[] extractElements(AdapterView<?> parent, int position){
         //GET THE ITEM TEXT
-        String text = parent.getItemAtPosition(position).toString();
-        //EXTRACTS USING REGEX AND RETURN ONLY THE WORD
-        final Pattern pattern = Pattern.compile("(?s)(?<=word=).*?(?=, definition)");
-        final Matcher matcher = pattern.matcher(text);
-        matcher.find();
-        return matcher.group(0);
+        WordClass item = (WordClass) parent.getItemAtPosition(position);
+        String[] elements = {item.getWord(),item.getDefinition(),item.getSentence()};
+        return elements;
     }
 
 }

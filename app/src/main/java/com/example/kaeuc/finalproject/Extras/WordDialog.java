@@ -6,9 +6,14 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
+
+import com.example.kaeuc.finalproject.Database.WordDAO;
+import com.example.kaeuc.finalproject.WordClass;
+
+import java.util.ArrayList;
 
 /**
  * PERSONALIZED DIALOG WINDOW TO USE WITHIN MYWORDSACTIVITY
@@ -19,8 +24,9 @@ public class WordDialog extends DialogFragment {
     private Context parentContext;
     private Bundle internalBundle;
 
+
     /*DIALOG WINDOW OPTIONS*/
-    private static final String [] DIALOG_ACTIONS = {"Delete Word", "Edit Word"};
+    private static final String [] DIALOG_ACTIONS = {"Delete Word", "Edit Word", "Edit Definition", "Edit Sentence"};
     /*FACTORY CLASS FOR DIALOGS*/
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -39,14 +45,42 @@ public class WordDialog extends DialogFragment {
                                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             // PERFORMS DELETE ACTIONS
-                                            WordDataBaseHelper helper = new WordDataBaseHelper(parentContext);
+                                            WordDAO helper = new WordDAO(parentContext);
                                             helper.deleteWord(internalBundle.getString("word"));
+
+
+                                            // New Code
+                                            AuxiliarList W = (AuxiliarList)internalBundle.getSerializable("list");
+                                            ListView myWordsList = W.wordList;
+                                            ArrayList<WordClass> words2 = new ArrayList<>();
+                                            WordsAdapter wordsAdapter = new WordsAdapter(parentContext,words2);
+                                            myWordsList.setAdapter(wordsAdapter);
+                                            helper.listWords(internalBundle.getString("lang"), parentContext, wordsAdapter);
+
                                         }
                                     });
                                builder.show();
 
-                        }else{ // EDIT BUTTON
+                        }else if(which == 1){ // EDIT BUTTON
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
+                            internalBundle.putString("title","word");
+                            internalBundle.putInt("operation",1);
+                            input.setParentContext(parentContext);
+                            input.showInputDialog();
 
+
+                        }else if(which == 2){
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
+                            internalBundle.putString("title","definition");
+                            internalBundle.putInt("operation",2);
+                            input.setParentContext(parentContext);
+                            input.showInputDialog();;
+                        }else{
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
+                            internalBundle.putString("title","sentence");
+                            internalBundle.putInt("operation",3);
+                            input.setParentContext(parentContext);
+                            input.showInputDialog();
                         }
                     }
                 });

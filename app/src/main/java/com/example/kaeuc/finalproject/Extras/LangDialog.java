@@ -6,8 +6,11 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 
 /**
  * PERSONALIZED DIALOG WINDOW TO USE WITHIN PICKLANGACTIVITY
@@ -39,13 +42,24 @@ public class LangDialog extends DialogFragment {
                                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             // PERFORMS DELETE ACTIONS
-                                            LanguagesDataBaseHelper helper = new LanguagesDataBaseHelper(parentContext);
+                                            LanguagesDAO helper = new LanguagesDAO(parentContext);
                                             helper.deleteLanguage(internalBundle.getString("language"),parentContext);
+
+                                            // New Code
+                                            AuxiliarLayout auxiliarLayout = (AuxiliarLayout) internalBundle.getSerializable("layout");
+                                            LinearLayout layout = auxiliarLayout.layout;
+
+                                            AuxiliarView auxiliarView = (AuxiliarView) internalBundle.getSerializable("view");
+                                            View view = auxiliarView.view;
+                                            layout.removeView(view);
+
                                         }
                                     });
                                builder.show();
 
-                        }else{ // EDIT BUTTON
+                        }else{
+                            UpdateLanguageDialog input = new UpdateLanguageDialog(internalBundle);
+                            input.showInputDialog(parentContext);
 
                         }
                     }
@@ -64,5 +78,11 @@ public class LangDialog extends DialogFragment {
     public void setInternalBundle(Bundle internalBundle) {
         this.internalBundle = internalBundle;
     }
+
+
+
+
+
+
 
 }

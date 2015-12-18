@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.Database.LoginDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LoginDAO;
 
 public class LoginActivity extends Activity {
 
@@ -22,14 +22,14 @@ public class LoginActivity extends Activity {
     private EditText edtPassword;
     private Button btnLogin;
     private Button btnCreateProfile;
-    private LoginDataBaseHelper helper;
+    private LoginDAO helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        helper = new LoginDataBaseHelper(this);
+        helper = new LoginDAO(this);
         edtUsername = (EditText) findViewById(R.id.edt_Username);
         edtPassword = (EditText) findViewById(R.id.edt_Password);
         btnLogin = (Button) findViewById(R.id.btn_login);

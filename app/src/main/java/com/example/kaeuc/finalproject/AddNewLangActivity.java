@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
-import com.example.kaeuc.finalproject.Database.LoginDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 
 /**
  * Created by kaeuc on 10/22/2015.
@@ -26,7 +24,7 @@ public class AddNewLangActivity extends Activity {
     private EditText edt_Language;
 
     /*DATABASE HELPER*/
-    private LanguagesDataBaseHelper helper;
+    private LanguagesDAO helper;
     private Intent previousIntent;
     private String username;
     @Override
@@ -38,7 +36,7 @@ public class AddNewLangActivity extends Activity {
         //INITIALIZE LAYOUT ELEMENTS
         edt_Language = (EditText) findViewById(R.id.edt_newLanguage);
         btnAddLang = (Button) findViewById(R.id.btn_addLanguage);
-        helper = new LanguagesDataBaseHelper(this);
+        helper = new LanguagesDAO(this);
         btnAddLang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

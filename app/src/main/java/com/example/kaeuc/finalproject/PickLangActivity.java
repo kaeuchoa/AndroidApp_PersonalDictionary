@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LanguagesDAO;
+import com.example.kaeuc.finalproject.Extras.AuxiliarLayout;
+import com.example.kaeuc.finalproject.Extras.AuxiliarView;
 import com.example.kaeuc.finalproject.Extras.Constants;
 import com.example.kaeuc.finalproject.Extras.LangDialog;
 
@@ -29,7 +31,7 @@ public class PickLangActivity extends Activity {
     //AUXILIAR ELEMENTS TO THE ACTIVITY FUNCTIONALITIES
     private int previousButtonsSize = 0;
     private String [] buttons = new String[0];
-    private LanguagesDataBaseHelper helper;
+    private LanguagesDAO helper;
     private Intent previousIntent;
     private String username;
 
@@ -43,7 +45,7 @@ public class PickLangActivity extends Activity {
         setContentView(R.layout.pick_language);
 
         //INITIALIZING BASICS LAYOUT ELEMENTS
-        helper = new LanguagesDataBaseHelper(this);
+        helper = new LanguagesDAO(this);
         this.addLangButton = (Button) findViewById(R.id.btn_addLang);
         layout = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -128,6 +130,16 @@ public class PickLangActivity extends Activity {
                         //CREATING A BUNDLE TO MAKE USE ON DELETE AND EDIT METHODS
                         String langName = ((Button)v).getText().toString();
                         Bundle wordBundle = new Bundle();
+
+
+                        AuxiliarLayout auxiliarLayout = new AuxiliarLayout();
+                        auxiliarLayout.layout = layout;
+
+                        AuxiliarView auxiliarView = new AuxiliarView();
+                        auxiliarView.view = v;
+
+                        wordBundle.putSerializable("view",auxiliarView);
+                        wordBundle.putSerializable("layout", auxiliarLayout);
                         wordBundle.putString("language", langName);
                         dialog.setInternalBundle(wordBundle);
 

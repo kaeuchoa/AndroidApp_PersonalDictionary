@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.example.kaeuc.finalproject.Database.LanguagesDataBaseHelper;
-import com.example.kaeuc.finalproject.Database.WordDataBaseHelper;
+import com.example.kaeuc.finalproject.Database.LanguagesDAO;
+import com.example.kaeuc.finalproject.Database.WordDAO;
 import com.example.kaeuc.finalproject.Extras.Constants;
 
 /**
@@ -27,7 +27,7 @@ public class AddWordActivity extends Activity {
     private EditText edtWordBox, edtDefinitionBox,edtExSentenceBox;
 
     /*CONTENT AUXILIARIES*/
-    private WordDataBaseHelper wordDataBaseHelper;
+    private WordDAO wordDAO;
     private Intent previousIntent;
     private String langName = "";
 
@@ -46,7 +46,7 @@ public class AddWordActivity extends Activity {
         edtWordBox = (EditText) findViewById(R.id.edt_wordBox);
 
         //INITIALIZE THE DATABASE HELPER
-        wordDataBaseHelper = new WordDataBaseHelper(this);
+        wordDAO = new WordDAO(this);
 
         //RETRIEVING THE CONTENT FROM THE LAST ACTIVITY THAT HOLDS THE LANGUAGE NAME
         previousIntent = getIntent();
@@ -72,7 +72,7 @@ public class AddWordActivity extends Activity {
     /*PRIVATE METHOD THAT USE THE DATABASEHELPERS OPERATIONS*/
     private void addWord(){
         //USES THE LANGUAGE HELPER TO FIND THE LANG_ID THAT WILL BE USED AS FOREIGN KEY IN THE DATABASE
-        LanguagesDataBaseHelper languagesDataBaseHelper = new LanguagesDataBaseHelper(this);
+        LanguagesDAO languagesDataBaseHelper = new LanguagesDAO(this);
         int langID = languagesDataBaseHelper.getId(this,langName);
 
         //ARRAY CONTAINING THE INFORMATION THAT WILL BE PASSED TO THE DATABSE
@@ -80,12 +80,12 @@ public class AddWordActivity extends Activity {
                             edtDefinitionBox.getText().toString(),
                             edtExSentenceBox.getText().toString(),String.valueOf(langID)};
 
-        wordDataBaseHelper.addWord(columns, AddWordActivity.this);
+        wordDAO.addWord(columns, AddWordActivity.this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        wordDataBaseHelper.close();
+        wordDAO.close();
     }
 }

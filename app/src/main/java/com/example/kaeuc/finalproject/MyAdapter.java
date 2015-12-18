@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by kaeuc on 11/30/2015.
  */
 public class MyAdapter extends ArrayAdapter<Map<String,String>> {
-    public MyAdapter(Context context, List<Map<String, String>> values) {
+public MyAdapter(Context context, List<Map<String, String>> values) {
         super(context,R.layout.my_words_row_layout ,values);
     }
 
@@ -41,9 +41,9 @@ public class MyAdapter extends ArrayAdapter<Map<String,String>> {
         // Get the TextView we want to edit
 
 
-        TextView theTextView = (TextView) theView.findViewById(R.id.txt_RowLayout);
+        //TextView theTextView = (TextView) theView.findViewById(R.id.txt_RowLayout);
 
-        theTextView.setText(finalText);
+        //theTextView.setText(finalText);
 
 
         return theView;
