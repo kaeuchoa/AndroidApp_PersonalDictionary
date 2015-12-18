@@ -62,23 +62,23 @@ public class WordDialog extends DialogFragment {
                                builder.show();
 
                         }else if(which == 1){ // EDIT BUTTON
-                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             internalBundle.putString("title","word");
                             internalBundle.putInt("operation",1);
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             input.setParentContext(parentContext);
                             input.showInputDialog();
 
 
                         }else if(which == 2){
-                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             internalBundle.putString("title","definition");
                             internalBundle.putInt("operation",2);
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             input.setParentContext(parentContext);
                             input.showInputDialog();;
                         }else{
-                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             internalBundle.putString("title","sentence");
                             internalBundle.putInt("operation",3);
+                            UpdateWordDialog input = new UpdateWordDialog(internalBundle);
                             input.setParentContext(parentContext);
                             input.showInputDialog();
                         }

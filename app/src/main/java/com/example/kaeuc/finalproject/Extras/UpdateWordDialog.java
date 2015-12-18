@@ -70,7 +70,7 @@ public class UpdateWordDialog  {
                                 }else if(op == 2){
                                     newString = editText.getText().toString();
                                     WordDAO helper = new WordDAO(parentContext);
-                                    helper.updateDefinition(internalBundle.getString("word"), newString);
+                                    helper.updateDefinition(internalBundle.getString("definition"), newString);
 
                                     // New Code
                                     AuxiliarList W = (AuxiliarList) internalBundle.getSerializable("list");
@@ -82,7 +82,7 @@ public class UpdateWordDialog  {
                                 }else{
                                     newString = editText.getText().toString();
                                     WordDAO helper = new WordDAO(parentContext);
-                                    helper.updateDefinition(internalBundle.getString("word"), newString);
+                                    helper.updateSentence(internalBundle.getString("sentence"), newString);
 
                                     // New Code
                                     AuxiliarList W = (AuxiliarList) internalBundle.getSerializable("list");
