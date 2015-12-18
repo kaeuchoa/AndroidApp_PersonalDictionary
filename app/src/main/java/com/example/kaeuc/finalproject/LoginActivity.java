@@ -2,6 +2,10 @@ package com.example.kaeuc.finalproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteCursorDriver;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQuery;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 import com.example.kaeuc.finalproject.Database.LoginDAO;
+import com.example.kaeuc.finalproject.Database.WordDAO;
+
+import java.io.IOException;
 
 public class LoginActivity extends Activity {
 
@@ -22,18 +30,63 @@ public class LoginActivity extends Activity {
     private EditText edtPassword;
     private Button btnLogin;
     private Button btnCreateProfile;
-    private LoginDAO helper;
+    private LoginDAO loginDAO;
+    private LanguagesDAO languagesDAO;
+    private WordDAO wordDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        helper = new LoginDAO(this);
         edtUsername = (EditText) findViewById(R.id.edt_Username);
         edtPassword = (EditText) findViewById(R.id.edt_Password);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnCreateProfile = (Button) findViewById(R.id.btn_createProfile);
+
+
+        Runnable r1 = new Runnable() {                 //Thread code
+
+            @Override
+            public void run() {
+                try {
+                    loginDAO = new LoginDAO(LoginActivity.this);
+                    languagesDAO = new LanguagesDAO(LoginActivity.this);
+                    wordDAO = new WordDAO(LoginActivity.this);
+
+                    Runnable r2 = new Runnable() {
+                        @Override
+                        public void run() {
+                            SQLiteDatabase db = SQLiteDatabase.create(new SQLiteDatabase.CursorFactory() {
+                                @Override
+                                public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery, String editTable, SQLiteQuery query) {
+                                    return null;
+                                }
+                            });
+                            loginDAO.onCreate(db);
+                            languagesDAO.onCreate(db);
+                            wordDAO.onCreate(db);
+                        }
+                    };
+                    runOnUiThread(r2);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+
+        Thread T = new Thread(r1); //new Thread(<runnable code>);
+
+        T.start();
+
+
+
+
+
+
         final View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +94,7 @@ public class LoginActivity extends Activity {
                 if(v.getId() == btnLogin.getId()){
                     String username = edtUsername.getText().toString();
                     String password = edtPassword.getText().toString();
-                    final int checkLogin = helper.checkLogin(username, password);
+                    final int checkLogin = loginDAO.checkLogin(username, password);
                     if (checkLogin == 1){
                         Intent intent = new Intent(PickLangActivity.ACTION_PICKLANG);
                         intent.addCategory(PickLangActivity.CATEGORY_PICKLANG);
