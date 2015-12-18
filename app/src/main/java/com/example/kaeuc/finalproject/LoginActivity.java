@@ -18,8 +18,6 @@ import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 import com.example.kaeuc.finalproject.Database.LoginDAO;
 import com.example.kaeuc.finalproject.Database.WordDAO;
 
-import java.io.IOException;
-
 public class LoginActivity extends Activity {
 
 

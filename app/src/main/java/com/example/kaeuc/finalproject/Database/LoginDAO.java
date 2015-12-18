@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 
+import com.example.kaeuc.finalproject.Extras.MD5Hashing;
+
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +23,12 @@ public class LoginDAO extends SQLiteOpenHelper {
 
     /*CONSTANTS WITH COLUMNS NAMES AND DB NAME*/
     private static final String DB_NAME = "login";
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
+    private static final String USERNAME_COLUMN = "username";
+    private static final String PASSWORD_COLUMN = "password";
+    private static final String SALT_COLUMN = "salt";
+    private final int KEY_LENGHT=128;
+    private final int SALT_LENGHT= KEY_LENGHT/8;
+    private byte[] salt;
     private static int VERSION = 1;
 
     /*CONSTRUCTOR*/
@@ -33,7 +40,7 @@ public class LoginDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DB_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " +
-                USERNAME +" TEXT NOT NULL ,"+ PASSWORD+" TEXT NOT NULL);");
+                USERNAME_COLUMN +" TEXT NOT NULL ,"+ PASSWORD_COLUMN +" TEXT NOT NULL ,"+ SALT_COLUMN +" TEXT NOT NULL );");
     }
 
     /*UPDATES THE DATABASE*/
@@ -42,7 +49,7 @@ public class LoginDAO extends SQLiteOpenHelper {
 
     }
 
-    /*PUBLIC METHOD FOR ADDING A LANGUAGE*/
+    /*PUBLIC METHOD FOR ADDING A USER*/
 
     public void addUser(String username, String password, Context context){
         if(username.isEmpty()){
@@ -51,9 +58,18 @@ public class LoginDAO extends SQLiteOpenHelper {
             //RETRIEVING THE DATABASE TO INSERT THE INFO
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(USERNAME, username);
+            SecureRandom random = new SecureRandom();
+
+            salt = new byte[SALT_LENGHT];
+            random.nextBytes(salt);
+            String stringSalt = salt.toString();
+
+            values.put(SALT_COLUMN,stringSalt);
+            values.put(USERNAME_COLUMN, username);
             //add the hash
-            values.put(PASSWORD,password);
+
+            password = MD5Hashing.applyHash(password+salt);
+            values.put(PASSWORD_COLUMN,password);
             long insert = db.insert(DB_NAME, null, values);
 
             /*DEALS WITH THE RESULT OF INSERT*/
@@ -67,15 +83,19 @@ public class LoginDAO extends SQLiteOpenHelper {
     }
     
     public int checkLogin(String username, String password){
-        String checkUserName, checkPassword;
+        String checkUserName, checkPassword, checkSalt;
         ArrayList<Map<String, String>> users = listUsers();
+
         if (users.size() == 0){
             return 0;
         }
         for (Map<String, String> map : users) {
-            checkUserName = map.get(USERNAME);
-            checkPassword = map.get(PASSWORD);
-            if (checkUserName.equals(username) && checkPassword.equals(password)){
+            checkUserName = map.get(USERNAME_COLUMN);
+            checkPassword = map.get(PASSWORD_COLUMN);
+            checkSalt = map.get(SALT_COLUMN);
+
+            final String hash = MD5Hashing.applyHash(password+checkSalt);
+            if (checkUserName.equals(username) && checkPassword.equals(hash)){
                 return 1;
             }
         }
@@ -91,7 +111,7 @@ public class LoginDAO extends SQLiteOpenHelper {
         ArrayList<Map<String, String>> users = new ArrayList<>();
         
         //CREATES THE SELECT QUERY
-        Cursor cursor = db.query(DB_NAME,new String[]{USERNAME,PASSWORD},null,null,null,null,null);
+        Cursor cursor = db.query(DB_NAME,new String[]{USERNAME_COLUMN, PASSWORD_COLUMN,SALT_COLUMN},null,null,null,null,null);
         cursor.moveToFirst();
         if (cursor.getCount()!= 0) {
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -100,10 +120,12 @@ public class LoginDAO extends SQLiteOpenHelper {
 
                 String username = cursor.getString(0);
                 String password = cursor.getString(1);
+                String salt = cursor.getString(2);
+              //  Toast.makeText(context, salt, Toast.LENGTH_SHORT).show();
 
-
-                item.put(USERNAME, username);
-                item.put(PASSWORD, password);
+                item.put(USERNAME_COLUMN, username);
+                item.put(PASSWORD_COLUMN, password);
+                item.put(SALT_COLUMN,salt);
 
 
                 users.add(item);
@@ -116,11 +138,11 @@ public class LoginDAO extends SQLiteOpenHelper {
     }
 
     /*PUBLIC METHOD USED TO IDENTIFY THE FOREIGN KEY BASED ON THE LANGUAGE NAME*/
-    public int getId(String username, Context context){
+    public int getId(String username){
         SQLiteDatabase db = getReadableDatabase();
         int userID = 0;
         final String[] selectColumn = {"_id"};
-        String whereClause = USERNAME + " =?";
+        String whereClause = USERNAME_COLUMN + " =?";
         String [] whereArgs = {username};
         Cursor cursor = db.query(DB_NAME,selectColumn,whereClause,whereArgs,null,null,null);
         cursor.moveToFirst();
@@ -133,13 +155,6 @@ public class LoginDAO extends SQLiteOpenHelper {
     }
 
 
-    /*PUBLIC METHOD TO DELETE LANGUAGES AND ALL ITS REGISTERS IN THE WORD TABLE */
-    /*public void deleteLanguage(String langName, Context context){
-        SQLiteDatabase db = getReadableDatabase();
-        WordDAO helper = new WordDAO(context);
-        helper.deleteByID(""+getId(context,langName));
-        db.delete(DB_NAME, USERNAME + "=?", new String[]{langName});
-    }*/
 
 
 }

@@ -53,7 +53,7 @@ public class LanguagesDAO extends SQLiteOpenHelper {
             LoginDAO helper = new LoginDAO(context);
             //Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
 
-            final int id = helper.getId(username,context);
+            final int id = helper.getId(username);
             String userID = String.valueOf(id);
             values.put(LANG_COLUMN, newLanguage);
             values.put(FOREIGNKEY_COLUMN, userID);
@@ -74,7 +74,7 @@ public class LanguagesDAO extends SQLiteOpenHelper {
         //GETS THE DATABASE TO READ FROM
         SQLiteDatabase db = getReadableDatabase();
         LoginDAO helper = new LoginDAO(context);
-        final int id = helper.getId(username, context);
+        final int id = helper.getId(username);
         final String stringID = String.valueOf(id);
         //CREATES THE SELECT QUERY
         Cursor cursor = db.query(DB_NAME,new String[]{LANG_COLUMN},FOREIGNKEY_COLUMN+"=?",
