@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
 
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/sampleImage"
+
+        android:layout_centerVertical="true"
+        />
     <TextView
 
         android:text="sample text:"
         android:id="@+id/txt_WordLine"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textColor="#000000"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/sampleImage" />
 
-        />
 
     <TextView
 
         android:text="sample text:"
         android:id="@+id/txt_DefinitionLine"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txt_WordLine"
+        android:layout_toEndOf="@+id/sampleImage" />
 
-        />
     <TextView
 
         android:text="sample text:"
         android:id="@+id/txt_SentenceLine"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txt_DefinitionLine"
+        android:layout_toEndOf="@+id/sampleImage" />
 
-        />
-</LinearLayout>
+</RelativeLayout>

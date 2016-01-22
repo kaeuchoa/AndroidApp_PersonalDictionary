@@ -8,7 +8,6 @@
     <TextView
         android:text="Create Profile"
         android:id="@+id/txt_login"
-
         android:layout_marginTop="30px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Username"
         android:id="@+id/txt_email"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="25dp"
         android:textSize="20dp"
         android:layout_below="@+id/txt_login"
         android:layout_alignStart="@+id/edt_createUsername"
@@ -79,6 +78,7 @@
         android:textStyle="bold"
         android:layout_marginTop="54dp"
         android:layout_below="@+id/edt_createPassword"
-        android:layout_toEndOf="@+id/txt_email" />
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

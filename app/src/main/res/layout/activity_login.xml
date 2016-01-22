@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
 
     tools:context="com.example.kaeuc.finalproject.login"
-    android:background="#FFFFFF">
+    android:background="@android:color/background_light">
 
     <TextView
         android:text="Login"

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@android:color/background_light">
 
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <TextView
 
@@ -28,17 +30,17 @@
             android:id="@+id/txt_word"
             android:layout_below="@+id/txt_newWord"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp" />
+            android:layout_marginStart="39dp" />
 
         <EditText
-            android:layout_width="330dp"
+            android:layout_width="500dp"
             android:layout_height="50dp"
             android:textSize="25dp"
             android:id="@+id/edt_wordBox"
             android:editable="true"
 
             android:layout_below="@+id/txt_word"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignStart="@+id/txt_word" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,16 +50,15 @@
             android:editable="false"
             android:id="@+id/txt_definition"
             android:layout_below="@+id/edt_wordBox"
-            android:layout_alignStart="@id/txt_word"
+            android:layout_alignStart="@id/edt_wordBox"
             />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="500dp"
             android:layout_height="100dp"
             android:textSize="15dp"
             android:id="@+id/edt_definitionBox"
             android:editable="true"
-            android:layout_alignEnd="@+id/edt_wordBox"
             android:layout_below="@+id/txt_definition"
             android:layout_alignStart="@+id/txt_definition" />
 
@@ -70,18 +71,17 @@
             android:editable="false"
             android:id="@+id/txt_exSentence"
             android:layout_below="@+id/edt_definitionBox"
-            android:layout_alignStart="@id/txt_word"
+            android:layout_alignStart="@id/txt_definition"
             />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="500dp"
             android:layout_height="100dp"
             android:textSize="15dp"
             android:id="@+id/edt_exSentenceBox"
             android:editable="true"
             android:layout_below="@+id/txt_exSentence"
             android:layout_alignStart="@+id/txt_exSentence"
-            android:layout_alignEnd="@+id/edt_wordBox"
             />
 
         <TextView
@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:text="Add Image"
             android:id="@+id/btn_addImage"
+            android:layout_marginBottom="50dp"
             android:layout_below="@+id/txt_image"
             android:layout_alignStart="@+id/edt_exSentenceBox"
             android:layout_marginTop="10px"
@@ -109,45 +110,48 @@
             android:textSize="15dp"
             android:background="@drawable/mybutton"
             android:textStyle="bold"
-             />
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px" />
 
 
 
         />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:id="@+id/btn_back"
-        android:layout_alignParentBottom="true"
-        android:padding="10dp"
-        android:textColor="#ffffff"
-        android:textSize="15dp"
-        android:background="@drawable/mybutton"
-        android:textStyle="bold"
-        android:layout_margin="10px"
-        android:layout_alignStart="@+id/txt_word"
-        />
-
 
         <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Add Word"
             android:id="@+id/btn_addWord"
+            android:layout_below="@+id/btn_addImage"
             android:layout_alignEnd="@+id/edt_exSentenceBox"
-            android:layout_alignTop="@+id/btn_back"
+            android:layout_marginTop="10px"
             android:padding="10dp"
             android:textColor="#ffffff"
             android:textSize="15dp"
             android:background="@drawable/mybutton"
             android:textStyle="bold"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px" />
 
-             />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/btn_back"
+            android:layout_below="@+id/btn_addImage"
+            android:layout_alignStart="@+id/edt_exSentenceBox"
+            android:layout_marginTop="10px"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:background="@drawable/mybutton"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"
+            />
+
+
+    </RelativeLayout>
 
 
 
-
-
-</RelativeLayout>
+</ScrollView>

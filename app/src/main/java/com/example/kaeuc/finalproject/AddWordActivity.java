@@ -65,7 +65,7 @@ public class AddWordActivity extends Activity {
                 }
             }
         };
-        btnBack.setOnClickListener(clickListener);
+       btnBack.setOnClickListener(clickListener);
         btnAddWord.setOnClickListener(clickListener);
     }
 

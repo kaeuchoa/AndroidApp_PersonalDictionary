@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+
 import com.example.kaeuc.finalproject.Database.LanguagesDAO;
 import com.example.kaeuc.finalproject.Extras.AuxiliarLayout;
 import com.example.kaeuc.finalproject.Extras.AuxiliarView;
 import com.example.kaeuc.finalproject.Extras.Constants;
 import com.example.kaeuc.finalproject.Extras.LangDialog;
+
+
 
 
 /*CLASS TO DEAL WITH THE LANGUAGE CHOICE MENU*/
